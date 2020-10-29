@@ -1,1 +1,68 @@
+package org.firstinspires.ftc.robotcontroller.external.samples;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
+
+@TeleOp
+
+public class driver_controlled_OpMode extends LinearOpMode {
+    String RFmotor= "put config file name here";
+    String RBmotor= "put config file name here";
+    String LFmotor= "put config file name here";
+    String LBmotor= "put config file name here";
+
+    private ElapsedTime runtime = new ElapsedTime();
+    private DcMotor RFMotor = null;
+    private DcMotor LFMotor = null;
+    private DcMotor RBMotor = null;
+    private DcMotor LBMotor = null;
+
+
+    @Override
+    public void runOpMode() {
+        RFMotor = hardwareMap.get(DcMotor.class, "RFmotor");
+        RBMotor = hardwareMap.get(DcMotor.class, "RBmotor");
+        LFMotor = hardwareMap.get(DcMotor.class, "LFmotor");
+        LBMotor = hardwareMap.get(DcMotor.class, "LBmotor");
+        servoTest = hardwareMap.get(Servo.class, "servoTest");
+
+        LFMotor.setDirection(DcMotor.Direction.FORWARD);
+        LBMotor.setDirection(DcMotor.Direction.FORWARD);
+        RF.setDirection(DcMotor.Direction.REVERSE);
+        RB.setDirection(DcMotor.Direction.REVERSE);
+
+        telemetry.addData("Status", "Initialized");
+        telemetry.update();
+        // Wait for the game to start (driver presses PLAY)
+        waitForStart();
+        runtime.reset();
+
+        // run until the end of the match (driver presses STOP)
+        while (opModeIsActive()) {
+
+            double RFPower;
+            double RBPower;
+            double LFPower;
+            double LBPower;
+
+
+            RFPower = -gamepad1.right_stick_y;
+            RBPower = -gamepad1.right_stick_y;
+            LFPower = -gamepad1.left_stick_y;
+            LBPower = -gamepad1.left_stick_y;
+
+            RFMotor.setPower(RFPower);
+            RBMotor.setPower(RBPower);
+            LFMotor.setPower(LFPower);
+            LBMotor.setPower(LBPower);
+
+
+            telemetry.addData("Status", "Running");
+            telemetry.update();
+
+        }
+    }
+}
 
