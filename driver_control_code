@@ -48,10 +48,12 @@ public class driver_controlled_OpMode extends LinearOpMode {
             double LBPower;
 
 
-            RFPower = -gamepad1.right_stick_y;
-            RBPower = -gamepad1.right_stick_y;
+            RFPower = -gamepad1.left_stick_y;
+            RBPower = -gamepad1.left_stick_y;
             LFPower = -gamepad1.left_stick_y;
             LBPower = -gamepad1.left_stick_y;
+            
+           
 
             RFMotor.setPower(RFPower);
             RBMotor.setPower(RBPower);
