@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp
 
-public class driver_controlled_OpMode extends LinearOpMode {
+public class DriverControlCode extends LinearOpMode {
     String RFmotor= "put config file name here";
     String RBmotor= "put config file name here";
     String LFmotor= "put config file name here";
@@ -27,7 +27,6 @@ public class driver_controlled_OpMode extends LinearOpMode {
         LFMotor = hardwareMap.get(DcMotor.class, "LFmotor");
         LBMotor = hardwareMap.get(DcMotor.class, "LBmotor");
         servoTest = hardwareMap.get(Servo.class, "servoTest");
-
         LFMotor.setDirection(DcMotor.Direction.FORWARD);
         LBMotor.setDirection(DcMotor.Direction.FORWARD);
         RF.setDirection(DcMotor.Direction.REVERSE);
@@ -38,28 +37,30 @@ public class driver_controlled_OpMode extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
+        
+        double RFPower;
+        double RBPower;
+        double LFPower;
+        double LBPower;
+        
+        double max;
+        double rot = 0.5;
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
-            double RFPower;
-            double RBPower;
-            double LFPower;
-            double LBPower;
-
-
-            RFPower = -gamepad1.left_stick_y;
-            RBPower = -gamepad1.left_stick_y;
-            LFPower = -gamepad1.left_stick_y;
-            LBPower = -gamepad1.left_stick_y;
+            X = -gamepad1.left_stick_x;
+            Y = -gamepad1.left_stick_y;
+            R =  gamepad1.right_stick_x;
             
-           
+            max = abs(X) + abs(Y) + rot * abs(R);
+            
+            max = (max < 1)? 1 : max;
 
-            RFMotor.setPower(RFPower);
-            RBMotor.setPower(RBPower);
-            LFMotor.setPower(LFPower);
-            LBMotor.setPower(LBPower);
-
+            RFMotor.setPower((-X + Y - R)/max);
+            RBMotor.setPower(( X + Y - R)/max);
+            LFMotor.setPower(( X + Y + R)/max);
+            LBMotor.setPower((-X + Y + R)/max);
 
             telemetry.addData("Status", "Running");
             telemetry.update();
@@ -67,4 +68,3 @@ public class driver_controlled_OpMode extends LinearOpMode {
         }
     }
 }
-
