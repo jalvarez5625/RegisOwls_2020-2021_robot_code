@@ -12,12 +12,16 @@ public class DriverControlCode extends LinearOpMode {
     String RBmotor= "put config file name here";
     String LFmotor= "put config file name here";
     String LBmotor= "put config file name here";
+    String Launchmotor= "put config file name here";
+    String Hoppermotor= "put config file name here";
 
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor RFMotor = null;
     private DcMotor LFMotor = null;
     private DcMotor RBMotor = null;
     private DcMotor LBMotor = null;
+    private DcMotor Launchmotor = null;
+    private DcMotor Hoppermotor = null;
 
 
     @Override
@@ -27,10 +31,14 @@ public class DriverControlCode extends LinearOpMode {
         LFMotor = hardwareMap.get(DcMotor.class, "LFmotor");
         LBMotor = hardwareMap.get(DcMotor.class, "LBmotor");
         servoTest = hardwareMap.get(Servo.class, "servoTest");
+        Launchmotor=hardwareMap.get(DcMotor.class, "Launchmotor");
+        Hoppermotor=hardwareMap.get(DcMotor.class, "Hoppermotor");
         LFMotor.setDirection(DcMotor.Direction.FORWARD);
         LBMotor.setDirection(DcMotor.Direction.FORWARD);
-        RF.setDirection(DcMotor.Direction.REVERSE);
-        RB.setDirection(DcMotor.Direction.REVERSE);
+        RFMotor.setDirection(DcMotor.Direction.REVERSE);
+        RBMotor.setDirection(DcMotor.Direction.REVERSE);
+        Launchmotor.setDirection(DcMotor.Direction.FORWARD);
+        Hoppermotor.setDirection(DcMotor.Direction.FORWARD);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -42,6 +50,8 @@ public class DriverControlCode extends LinearOpMode {
         double RBPower;
         double LFPower;
         double LBPower;
+        double Launchpower;
+        double Hopperpower;
         
         double max;
         double rot = 0.5;
@@ -52,6 +62,8 @@ public class DriverControlCode extends LinearOpMode {
             X = -gamepad1.left_stick_x;
             Y = -gamepad1.left_stick_y;
             R =  gamepad1.right_stick_x;
+            Launchpower = gamepad1.right_trigger;
+            Hopperpower = gamepad1.left_trigger;
             
             max = abs(X) + abs(Y) + rot * abs(R);
             
@@ -61,6 +73,8 @@ public class DriverControlCode extends LinearOpMode {
             RBMotor.setPower(( X + Y - R)/max);
             LFMotor.setPower(( X + Y + R)/max);
             LBMotor.setPower((-X + Y + R)/max);
+            Launchmotor.setPower(Launchpower);
+            Hoppermotor.setPower(Hopperpower);
 
             telemetry.addData("Status", "Running");
             telemetry.update();
