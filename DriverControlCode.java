@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp
+@TeleOp (name="DriverControlCode", group="Linear Opmode")
 
 public class DriverControlCode extends LinearOpMode {
     String RFmotor= "put config file name here";
