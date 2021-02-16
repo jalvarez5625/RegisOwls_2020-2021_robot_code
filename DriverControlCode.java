@@ -8,12 +8,6 @@ import com.qualcomm.robotcore.util.Range;
 @TeleOp (name="DriverControlCode", group="Linear Opmode")
 
 public class DriverControlCode extends LinearOpMode {
-    String RFmotor= "put config file name here";
-    String RBmotor= "put config file name here";
-    String LFmotor= "put config file name here";
-    String LBmotor= "put config file name here";
-    String Launchmotor= "put config file name here";
-    String Hoppermotor= "put config file name here";
 
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor RFMotor = null;
@@ -26,10 +20,10 @@ public class DriverControlCode extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        RFMotor = hardwareMap.get(DcMotor.class, "RFmotor");
-        RBMotor = hardwareMap.get(DcMotor.class, "RBmotor");
-        LFMotor = hardwareMap.get(DcMotor.class, "LFmotor");
-        LBMotor = hardwareMap.get(DcMotor.class, "LBmotor");
+        RFMotor = hardwareMap.get(DcMotor.class, "Top Right");
+        RBMotor = hardwareMap.get(DcMotor.class, "Bottom Right");
+        LFMotor = hardwareMap.get(DcMotor.class, "Top Left");
+        LBMotor = hardwareMap.get(DcMotor.class, "Bottom Left");
         servoTest = hardwareMap.get(Servo.class, "servoTest");
         Launchmotor=hardwareMap.get(DcMotor.class, "Launchmotor");
         Hoppermotor=hardwareMap.get(DcMotor.class, "Hoppermotor");
@@ -45,14 +39,14 @@ public class DriverControlCode extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
-        
+
         double RFPower;
         double RBPower;
         double LFPower;
         double LBPower;
         double Launchpower;
         double Hopperpower;
-        
+
         double max;
         double rot = 0.5;
 
@@ -64,9 +58,9 @@ public class DriverControlCode extends LinearOpMode {
             R =  gamepad1.right_stick_x;
             Launchpower = gamepad1.right_trigger;
             Hopperpower = gamepad1.left_trigger;
-            
+
             max = abs(X) + abs(Y) + rot * abs(R);
-            
+
             max = (max < 1)? 1 : max;
 
             RFMotor.setPower((-X + Y - R)/max);
@@ -82,3 +76,4 @@ public class DriverControlCode extends LinearOpMode {
         }
     }
 }
+
