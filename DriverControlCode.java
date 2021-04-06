@@ -1,13 +1,15 @@
 package org.firstinspires.ftc.robotcontroller.external.samples;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+import java.lang.Math;
 
 @TeleOp (name="DriverControlCode", group="Linear Opmode")
 
-public class DriverControlCode extends LinearOpMode {
+public class DriverControlledCode extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor RFMotor = null;
@@ -24,7 +26,6 @@ public class DriverControlCode extends LinearOpMode {
         RBMotor = hardwareMap.get(DcMotor.class, "Bottom Right");
         LFMotor = hardwareMap.get(DcMotor.class, "Top Left");
         LBMotor = hardwareMap.get(DcMotor.class, "Bottom Left");
-        servoTest = hardwareMap.get(Servo.class, "servoTest");
         Launchmotor=hardwareMap.get(DcMotor.class, "Launchmotor");
         Hoppermotor=hardwareMap.get(DcMotor.class, "Hoppermotor");
         LFMotor.setDirection(DcMotor.Direction.FORWARD);
@@ -33,6 +34,10 @@ public class DriverControlCode extends LinearOpMode {
         RBMotor.setDirection(DcMotor.Direction.REVERSE);
         Launchmotor.setDirection(DcMotor.Direction.FORWARD);
         Hoppermotor.setDirection(DcMotor.Direction.FORWARD);
+
+        double X = 0;
+        double Y = 0;
+        double R = 0;
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -50,6 +55,7 @@ public class DriverControlCode extends LinearOpMode {
         double max;
         double rot = 0.5;
 
+
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
@@ -59,7 +65,7 @@ public class DriverControlCode extends LinearOpMode {
             Launchpower = gamepad1.right_trigger;
             Hopperpower = gamepad1.left_trigger;
 
-            max = abs(X) + abs(Y) + rot * abs(R);
+            max = Math.abs(X) + Math.abs(Y) + rot * Math.abs(R);
 
             max = (max < 1)? 1 : max;
 
@@ -76,4 +82,3 @@ public class DriverControlCode extends LinearOpMode {
         }
     }
 }
-
